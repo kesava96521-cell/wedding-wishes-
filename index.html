@@ -3,129 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Narendra & Pavani - Wedding Story</title>
+    <title>Narendra & Pavani Wedding Story</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --pastel-pink: #ffd1dc; --soft-purple: #e2d1f9; --gold: #d4af37; --text: #4a4a4a; }
+        :root { --pastel-pink: #fce4ec; --soft-purple: #f3e5f5; --gold: #b8860b; --deep-pink: #ad1457; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, var(--pastel-pink), var(--soft-purple)); color: var(--text); overflow: hidden; height: 100vh; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, var(--pastel-pink), var(--soft-purple)); color: #333; overflow: hidden; height: 100vh; }
 
-        /* Page Management */
         .page { 
             position: absolute; width: 100%; height: 100vh; 
             display: none; flex-direction: column; align-items: center; justify-content: center; 
-            padding: 30px; text-align: center;
-            animation: slideIn 0.6s ease-in-out;
+            padding: 40px; text-align: center; background: inherit;
+            transition: all 0.8s ease-in-out;
         }
-        .active { display: flex; }
-        @keyframes slideIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .active { display: flex; animation: slideUp 0.8s forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Elements */
-        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--gold); margin-bottom: 10px; }
-        h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
-        .main-img { width: 250px; border-radius: 50%; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .story-img { max-width: 90%; max-height: 50vh; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.8rem; color: var(--gold); margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .hero-img { width: 220px; height: 220px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-bottom: 25px; object-fit: cover; }
         
         .btn { 
-            padding: 15px 40px; border: none; border-radius: 30px; 
-            background: var(--gold); color: white; font-size: 1.1rem; 
-            cursor: pointer; font-weight: 600;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            transition: 0.3s;
+            padding: 18px 45px; border: none; border-radius: 50px; 
+            background: linear-gradient(45deg, var(--gold), #edc967); color: white; 
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(184, 134, 11, 0.3); transition: 0.3s;
         }
-        .btn:hover { transform: scale(1.05); }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 15px 25px rgba(184, 134, 11, 0.4); }
 
-        #typewriter { font-size: 1.2rem; line-height: 1.8; max-width: 600px; min-height: 120px; margin-bottom: 20px; }
-        .timer { font-size: 2rem; font-weight: bold; color: var(--gold); margin-bottom: 20px; }
+        #typewriter { font-size: 1.3rem; line-height: 1.8; color: #555; max-width: 650px; min-height: 150px; font-style: italic; }
+        .timer-display { font-size: 2.2rem; font-weight: bold; color: var(--deep-pink); margin: 20px 0; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <div id="page1" class="page active">
-        <img src="indian-hindu-wedding-bride-groom-600nw-2467295059.jpg" class="main-img">
+    <audio id="bgMusic" loop src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio> 
+    <audio id="voiceMsg" src="voice.mp3"></audio> <div id="page1" class="page active">
+        <img src="indian-hindu-wedding-bride-groom-600nw-2467295059.jpg" class="hero-img">
         <h1>Narendra & Pavani</h1>
-        <p>A Beautiful Journey Begins ❤️</p>
-        <button class="btn" onclick="startExperience()">Enter Their Story</button>
+        <p style="font-size: 1.2rem; letter-spacing: 2px;">A SYMPHONY OF LOVE ❤️</p>
+        <button class="btn" onclick="startJourney()">Start Their Story</button>
     </div>
 
     <div id="page2" class="page">
-        <h2>Our Story</h2>
+        <h2 style="color: var(--gold); font-family: 'Dancing Script'; font-size: 3rem; margin-bottom: 20px;">The Story</h2>
         <div id="typewriter"></div>
-        <button id="btn2" class="btn" style="display:none;" onclick="showPage(3)">See Moments</button>
+        <button id="nextBtn" class="btn" style="visibility: hidden;" onclick="goToPage(3)">Continue</button>
     </div>
 
     <div id="page3" class="page">
-        <h2>Memories</h2>
-        <img src="IMG_20260329_120006.jpg" class="story-img">
-        <p>Every moment is a treasure...</p>
-        <button class="btn" onclick="showPage(4)">The Big Day</button>
+        <h2 style="color: var(--gold); font-family: 'Dancing Script'; font-size: 3rem;">Forever Begins In...</h2>
+        <div id="timer" class="timer-display"></div>
+        <img src="IMG_20260329_120006.jpg" style="width: 300px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+        <button class="btn" onclick="goToPage(4)">Send Blessings</button>
     </div>
 
     <div id="page4" class="page">
-        <h2>Counting Down...</h2>
-        <div id="timer" class="timer"></div>
-        <p>April 1, 2026</p>
-        <button class="btn" onclick="showPage(5)">Final Surprise</button>
-    </div>
-
-    <div id="page5" class="page">
-        <h2>Happy Married Life!</h2>
-        <p>The End is Just the Beginning ❤️</p>
-        <button class="btn" onclick="celebrate()">Bless the Couple 🎉</button>
+        <h1>Happy Married Life!</h1>
+        <p style="max-width: 500px; font-size: 1.1rem; margin-top: 20px;">"Two souls with but a single thought, two hearts that beat as one."</p>
+        <button class="btn" onclick="finalCelebrate()">Celebrate ❤️ 🎉</button>
+        <p style="margin-top: 40px; font-family: 'Dancing Script'; font-size: 1.5rem;">The End is Just the Beginning...</p>
     </div>
 
     <script>
         let currentPage = 1;
+        const bgMusic = document.getElementById('bgMusic');
+        const voiceMsg = document.getElementById('voiceMsg');
 
-        // Start Experience (Handles Audio Permission)
-        function startExperience() {
-            // Play Background Music
-            playBackgroundMusic();
-            showPage(2);
-            startTypewriter();
+        function startJourney() {
+            // ఆటోమేటిక్ మ్యూజిక్ స్టార్ట్
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(e => console.log("Music blocked by browser"));
+            
+            // వాయిస్ విష్ (Fallback to System Speech if MP3 fails)
+            playVoice();
+
+            goToPage(2);
+            typeEffect();
         }
 
-        // Switch Pages
-        function showPage(num) {
+        function playVoice() {
+            // ఒకవేళ వాయిస్.mp3 ఉంటే అది ప్లే అవుతుంది, లేదంటే బ్రౌజర్ మాట్లాడుతుంది
+            voiceMsg.play().catch(() => {
+                const speech = new SpeechSynthesisUtterance("నరేంద్ర మరియు పావనిలకు వివాహ శుభాకాంక్షలు.");
+                speech.lang = 'te-IN';
+                speech.rate = 0.8;
+                window.speechSynthesis.speak(speech);
+            });
+        }
+
+        function goToPage(num) {
             document.getElementById(`page${currentPage}`).classList.remove('active');
-            document.getElementById(`page${num}`).classList.add('active');
-            currentPage = num;
+            setTimeout(() => {
+                document.getElementById(`page${num}`).classList.add('active');
+                currentPage = num;
+            }, 100);
+        }
 
-            // Page 4 trigger voice wish
-            if(num === 4) {
-                setTimeout(playTeluguVoice, 1000);
+        function typeEffect() {
+            const text = "నరేంద్ర గారు బాధ్యతాయుతమైన అధికారి.. పావని  ప్రేమానురాగాలు పంచే గొప్ప మనసున్న వారు. వీరిద్దరి కలయిక ఒక అద్భుతమైన కావ్యం...";
+            let i = 0;
+            const container = document.getElementById("typewriter");
+            function typing() {
+                if (i < text.length) {
+                    container.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, 80);
+                } else {
+                    document.getElementById("nextBtn").style.visibility = "visible";
+                }
             }
+            typing();
         }
 
-        // Typewriter Effect
-        const storyText = "నరేంద్ర గారు ఒక బాధ్యతాయుతమైన గవర్నమెంట్ ఆఫీసర్. పావని గారు అందరినీ ప్రేమించే స్వచ్ఛమైన మనసున్న వ్యక్తి. ఈ ఇద్దరి ప్రయాణం ఇప్పుడు ఒకటవుతోంది...";
-        let i = 0;
-        function startTypewriter() {
-            if (i < storyText.length) {
-                document.getElementById("typewriter").innerHTML += storyText.charAt(i);
-                i++;
-                setTimeout(startTypewriter, 100);
-            } else {
-                document.getElementById("btn2").style.display = "block";
-            }
-        }
-
-        // Audio Logic
-        function playBackgroundMusic() {
-            // Browsers need user interaction to play audio. 
-            // You can add a hidden audio element with your music link here.
-            console.log("Music Started...");
-        }
-
-        function playTeluguVoice() {
-            const speech = new SpeechSynthesisUtterance("నరేంద్ర మరియు పావనిలకు వివాహ శుభాకాంక్షలు. మీ ప్రయాణం ఎల్లప్పుడూ సుఖసంతోషాలతో సాగాలని కోరుకుంటున్నాము.");
-            speech.lang = 'te-IN';
-            speech.rate = 0.9;
-            window.speechSynthesis.speak(speech);
-        }
-
-        // Countdown Timer
         function updateTimer() {
             const weddingDate = new Date("April 1, 2026 09:00:00").getTime();
             const now = new Date().getTime();
@@ -138,9 +128,9 @@
         }
         setInterval(updateTimer, 1000);
 
-        // Confetti
-        function celebrate() {
-            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+        function finalCelebrate() {
+            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+            playVoice(); // మళ్ళీ ఒకసారి విష్
         }
     </script>
 </body>
